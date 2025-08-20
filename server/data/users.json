@@ -1,0 +1,102 @@
+[
+  {
+    "email": "marcellnicson@gmail.com",
+    "password": "marcellnicson@gmail.com",
+    "handle": "@marcell",
+    "avatar": "http://localhost:3000/uploads/c1cb4902-b584-4050-8531-d2aad435b901.jpg",
+    "avatarLight": "http://localhost:3000/uploads/213a2cd3-bb6e-403e-835a-9de46a589493.jpg",
+    "links": [
+      {
+        "label": "COMO",
+        "url": "https://github.com/marcell-nicson"
+      },
+      {
+        "label": "LIKEDIN",
+        "url": "https://github.com/marcell-nicson"
+      },
+      {
+        "label": "JORNAL HOJE",
+        "url": "https://github.com/marcell-nicson"
+      }
+    ],
+    "socials": {
+      "github": "https://github.com/marcell-nicson",
+      "instagram": "https://github.com/marcell-nicson",
+      "linkedin": "https://github.com/marcell-nicson",
+      "twitter": ""
+    },
+    "theme": "dark"
+  },
+  {
+    "email": "test@test.com",
+    "password": "123456",
+    "handle": "@seuUsuario",
+    "avatar": null,
+    "avatarLight": null,
+    "links": [
+      {
+        "label": "Instagram",
+        "url": "https://instagram.com/usuario"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/usuario"
+      }
+    ],
+    "socials": {
+      "github": "https://github.com/usuario",
+      "instagram": "https://instagram.com/usuario",
+      "linkedin": "https://linkedin.com/in/usuario",
+      "twitter": "https://twitter.com/usuario"
+    },
+    "theme": "dark"
+  },
+  {
+    "email": "debug@test.com",
+    "password": "123456",
+    "handle": "@seuUsuario",
+    "avatar": null,
+    "avatarLight": null,
+    "links": [
+      {
+        "label": "Instagram",
+        "url": "https://instagram.com/usuario"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/usuario"
+      }
+    ],
+    "socials": {
+      "github": "https://github.com/usuario",
+      "instagram": "https://instagram.com/usuario",
+      "linkedin": "https://linkedin.com/in/usuario",
+      "twitter": "https://twitter.com/usuario"
+    },
+    "theme": "dark"
+  },
+  {
+    "email": "test1755618847617@test.com",
+    "password": "123456",
+    "handle": "@Nicson",
+    "avatar": "http://localhost:3000/uploads/94ed960e-b84b-4d09-8aee-fdcaf81c6753.jpg",
+    "avatarLight": "http://localhost:3000/uploads/8281eabe-e848-4a92-8c0a-62d8b47cfda1.jpg",
+    "links": [
+      {
+        "label": "Instagram",
+        "url": "https://instagram.com/usuario"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/usuario"
+      }
+    ],
+    "socials": {
+      "github": "https://github.com/usuario",
+      "instagram": "https://instagram.com/usuario",
+      "linkedin": "https://linkedin.com/in/usuario",
+      "twitter": "https://twitter.com/usuario"
+    },
+    "theme": "dark"
+  }
+]

@@ -1,4 +1,4 @@
-<h1 align="center"> DevLinks </h1>
+<h1 align="center"> DevLinks com Login e Dashboard </h1>
 
 <p align="center">
 Programa exclusivo e gratuito, promovido pela Rocketseat para ensino de tecnologias WEB. <br/>
@@ -33,7 +33,13 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Projeto
 
-O DevLinks é um agregador de links para usar como cartão de visitas online.
+O DevLinks é um agregador de links para usar como cartão de visitas online. Esta versão inclui:
+<br/>
+• Cadastro e login com email e senha (armazenados no localStorage para fins de demonstração)
+<br/>
+• Dashboard para configurar avatar (dark e light), handle, links e redes sociais
+<br/>
+• Tema dark/light persistido por usuário
 
 - [Acesse o projeto finalizado, online](https://maykbrito.github.io/devlinks)
 
@@ -47,6 +53,13 @@ Você pode visualizar o layout do projeto através [DESSE LINK](https://www.figm
 
 Esse projeto está sob a licença MIT.
 
+## ▶️ Como usar
+
+1. Abra `index.html` para visualizar o perfil público.
+2. Clique em "Entrar" para ir a `login.html` (cadastro/login).
+3. Após logar, você será redirecionado ao `dashboard.html` para configurar seu menu.
+4. As alterações aparecem automaticamente na página principal.
+
 ---
 
-Feito com ♥ by Rocketseat :wave: [Participe da nossa comunidade!](https://discord.gg/rocketseat)
+Feito com ♥ by Marcell :wave: [Participe da nossa comunidade!](https://discord.gg/rocketseat)

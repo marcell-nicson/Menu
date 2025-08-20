@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DevLinks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="form-container dashboard-container">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Dashboard</h1>
+        <nav class="dashboard-nav">
+          <a href="index.html">Ver perfil público</a>
+          <button class="btn btn-secondary" id="logout-btn">Sair</button>
+        </nav>
+      </div>
+
+      <form class="form" id="profile-form">
+        <div class="form-grid">
+          <!-- Handle -->
+          <div class="form-group">
+            <label class="form-label" for="handle">Handle</label>
+            <input 
+              class="form-input" 
+              id="handle" 
+              type="text" 
+              placeholder="@seuUsuario"
+            >
+          </div>
+
+          <!-- Theme -->
+          <div class="form-group">
+            <label class="form-label" for="theme">Tema padrão</label>
+            <select class="form-input" id="theme">
+              <option value="dark">Escuro</option>
+              <option value="light">Claro</option>
+            </select>
+          </div>
+
+          <!-- Avatar Dark -->
+          <div class="form-group full-width">
+            <label class="form-label" for="avatar-file">Avatar (modo escuro)</label>
+            <input 
+              class="form-input" 
+              id="avatar-file" 
+              type="file" 
+              accept="image/*"
+            >
+            <img id="avatar-preview" class="avatar-preview" alt="Preview do avatar escuro" style="display: none;">
+          </div>
+
+          <!-- Avatar Light -->
+          <div class="form-group full-width">
+            <label class="form-label" for="avatar-light-file">Avatar (modo claro)</label>
+            <input 
+              class="form-input" 
+              id="avatar-light-file" 
+              type="file" 
+              accept="image/*"
+            >
+            <img id="avatar-light-preview" class="avatar-preview" alt="Preview do avatar claro" style="display: none;">
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <h3 style="margin-top: 24px; margin-bottom: 16px;">Redes Sociais</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="github">GitHub</label>
+            <input 
+              class="form-input" 
+              id="github" 
+              type="url" 
+              placeholder="https://github.com/usuario"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="instagram">Instagram</label>
+            <input 
+              class="form-input" 
+              id="instagram" 
+              type="url" 
+              placeholder="https://instagram.com/usuario"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="linkedin">LinkedIn</label>
+            <input 
+              class="form-input" 
+              id="linkedin" 
+              type="url" 
+              placeholder="https://linkedin.com/in/usuario"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="twitter">Twitter/X</label>
+            <input 
+              class="form-input" 
+              id="twitter" 
+              type="url" 
+              placeholder="https://twitter.com/usuario"
+            >
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div class="links-editor">
+          <h3 style="margin-bottom: 16px;">Links</h3>
+          <div id="links-list">
+            <!-- Dynamic links will be inserted here -->
+          </div>
+
+          <!-- Add new link -->
+          <div class="form-grid" style="margin-top: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="new-link-label">Novo link - Rótulo</label>
+              <input 
+                class="form-input" 
+                id="new-link-label" 
+                type="text" 
+                placeholder="Ex: Instagram"
+              >
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="new-link-url">Novo link - URL</label>
+              <input 
+                class="form-input" 
+                id="new-link-url" 
+                type="url" 
+                placeholder="https://exemplo.com"
+              >
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary" id="add-link-btn" style="margin-top: 8px;">
+            Adicionar Link
+          </button>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions" style="margin-top: 32px;">
+          <button type="submit" class="btn btn-primary">
+            Salvar Alterações
+          </button>
+        </div>
+
+        <div class="success-message" id="success-message">
+          Alterações salvas com sucesso! ✨
+        </div>
+      </form>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+      class Dashboard {
+        constructor() {
+          this.currentUser = null;
+          this.elements = this.getElements();
+          this.init();
+        }
+
+        getElements() {
+          return {
+            form: document.getElementById('profile-form'),
+            handle: document.getElementById('handle'),
+            theme: document.getElementById('theme'),
+            avatarFile: document.getElementById('avatar-file'),
+            avatarLightFile: document.getElementById('avatar-light-file'),
+            avatarPreview: document.getElementById('avatar-preview'),
+            avatarLightPreview: document.getElementById('avatar-light-preview'),
+            github: document.getElementById('github'),
+            instagram: document.getElementById('instagram'),
+            linkedin: document.getElementById('linkedin'),
+            twitter: document.getElementById('twitter'),
+            linksList: document.getElementById('links-list'),
+            newLinkLabel: document.getElementById('new-link-label'),
+            newLinkUrl: document.getElementById('new-link-url'),
+            addLinkBtn: document.getElementById('add-link-btn'),
+            logoutBtn: document.getElementById('logout-btn'),
+            successMessage: document.getElementById('success-message'),
+          };
+        }
+
+        async init() {
+          // Redirect if not logged in
+          if (!api.isLoggedIn()) {
+            window.location.href = 'login.html';
+            return;
+          }
+
+          await this.loadUserData();
+          this.bindEvents();
+        }
+
+        async loadUserData() {
+          try {
+            this.currentUser = await api.getMe();
+            this.populateForm();
+            this.renderLinks();
+          } catch (error) {
+            console.error('Failed to load user data:', error);
+            alert('Erro ao carregar dados do usuário');
+          }
+        }
+
+        populateForm() {
+          if (!this.currentUser) return;
+
+          // Basic info
+          this.elements.handle.value = this.currentUser.handle || '';
+          this.elements.theme.value = this.currentUser.theme || 'dark';
+
+          // Avatars
+          if (this.currentUser.avatar) {
+            this.elements.avatarPreview.src = this.currentUser.avatar;
+            this.elements.avatarPreview.style.display = 'block';
+          }
+
+          if (this.currentUser.avatarLight) {
+            this.elements.avatarLightPreview.src = this.currentUser.avatarLight;
+            this.elements.avatarLightPreview.style.display = 'block';
+          }
+
+          // Social links
+          const socials = this.currentUser.socials || {};
+          this.elements.github.value = socials.github || '';
+          this.elements.instagram.value = socials.instagram || '';
+          this.elements.linkedin.value = socials.linkedin || '';
+          this.elements.twitter.value = socials.twitter || '';
+        }
+
+        renderLinks() {
+          this.elements.linksList.innerHTML = '';
+
+          if (!this.currentUser.links || this.currentUser.links.length === 0) {
+            this.elements.linksList.innerHTML = '<p style="text-align: center; opacity: 0.6;">Nenhum link adicionado ainda</p>';
+            return;
+          }
+
+          this.currentUser.links.forEach((link, index) => {
+            const linkRow = document.createElement('div');
+            linkRow.className = 'link-row';
+            
+            const labelInput = document.createElement('input');
+            labelInput.type = 'text';
+            labelInput.className = 'form-input';
+            labelInput.value = link.label || '';
+            labelInput.placeholder = 'Rótulo';
+            
+            const urlInput = document.createElement('input');
+            urlInput.type = 'url';
+            urlInput.className = 'form-input';
+            urlInput.value = link.url || '';
+            urlInput.placeholder = 'URL';
+            
+            const updateBtn = document.createElement('button');
+            updateBtn.type = 'button';
+            updateBtn.className = 'btn btn-primary';
+            updateBtn.textContent = 'Atualizar';
+            updateBtn.addEventListener('click', () => this.updateLink(index, linkRow));
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'btn btn-secondary';
+            removeBtn.textContent = 'Remover';
+            removeBtn.style.background = '#ff6b6b';
+            removeBtn.addEventListener('click', () => this.removeLink(index));
+            
+            linkRow.appendChild(labelInput);
+            linkRow.appendChild(urlInput);
+            linkRow.appendChild(updateBtn);
+            linkRow.appendChild(removeBtn);
+            
+            this.elements.linksList.appendChild(linkRow);
+          });
+        }
+
+        bindEvents() {
+          // Form submission
+          this.elements.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+          // Add link
+          this.elements.addLinkBtn.addEventListener('click', () => this.addLink());
+
+          // Logout
+          this.elements.logoutBtn.addEventListener('click', () => this.logout());
+
+          // Avatar uploads
+          this.elements.avatarFile.addEventListener('change', (e) => this.handleAvatarUpload(e, 'dark'));
+          this.elements.avatarLightFile.addEventListener('change', (e) => this.handleAvatarUpload(e, 'light'));
+        }
+
+        async handleSubmit(event) {
+          event.preventDefault();
+
+          const updates = {
+            handle: this.elements.handle.value.trim() || '@seuUsuario',
+            theme: this.elements.theme.value,
+            socials: {
+              github: this.elements.github.value.trim(),
+              instagram: this.elements.instagram.value.trim(),
+              linkedin: this.elements.linkedin.value.trim(),
+              twitter: this.elements.twitter.value.trim(),
+            }
+          };
+
+          try {
+            this.currentUser = await api.updateMe(updates);
+            this.showSuccess();
+          } catch (error) {
+            console.error('Failed to update profile:', error);
+            alert('Erro ao salvar alterações');
+          }
+        }
+
+        async addLink() {
+          const label = this.elements.newLinkLabel.value.trim();
+          const url = this.elements.newLinkUrl.value.trim();
+
+          if (!url) {
+            alert('Por favor, insira uma URL');
+            return;
+          }
+
+          const newLink = { label: label || url, url };
+          const links = [...(this.currentUser.links || []), newLink];
+
+          try {
+            this.currentUser = await api.updateMe({ links });
+            this.elements.newLinkLabel.value = '';
+            this.elements.newLinkUrl.value = '';
+            this.renderLinks();
+            this.showSuccess();
+          } catch (error) {
+            console.error('Failed to add link:', error);
+            alert('Erro ao adicionar link');
+          }
+        }
+
+        async updateLink(index, rowElement) {
+          const inputs = rowElement.querySelectorAll('input');
+          const label = inputs[0].value.trim();
+          const url = inputs[1].value.trim();
+
+          if (!url) {
+            alert('URL é obrigatória');
+            return;
+          }
+
+          const links = [...this.currentUser.links];
+          links[index] = { label: label || url, url };
+
+          try {
+            this.currentUser = await api.updateMe({ links });
+            this.showSuccess();
+          } catch (error) {
+            console.error('Failed to update link:', error);
+            alert('Erro ao atualizar link: ' + error.message);
+          }
+        }
+
+        async removeLink(index) {
+          if (!confirm('Tem certeza que deseja remover este link?')) return;
+
+          const links = [...this.currentUser.links];
+          links.splice(index, 1);
+
+          try {
+            this.currentUser = await api.updateMe({ links });
+            this.renderLinks();
+            this.showSuccess();
+          } catch (error) {
+            console.error('Failed to remove link:', error);
+            alert('Erro ao remover link: ' + error.message);
+          }
+        }
+
+        async handleAvatarUpload(event, variant) {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          try {
+            const result = await api.uploadAvatar(file, variant);
+            this.currentUser = result.user;
+            
+            // Update preview
+            const previewElement = variant === 'light' 
+              ? this.elements.avatarLightPreview 
+              : this.elements.avatarPreview;
+            
+            previewElement.src = result.url;
+            previewElement.style.display = 'block';
+            
+            this.showSuccess();
+          } catch (error) {
+            console.error('Failed to upload avatar:', error);
+            alert('Erro ao fazer upload da imagem');
+          }
+        }
+
+        logout() {
+          if (confirm('Tem certeza que deseja sair?')) {
+            api.logout();
+            window.location.href = 'index.html';
+          }
+        }
+
+        showSuccess() {
+          this.elements.successMessage.classList.add('show');
+          setTimeout(() => {
+            this.elements.successMessage.classList.remove('show');
+          }, 3000);
+        }
+      }
+
+      // Initialize dashboard
+      const dashboard = new Dashboard();
+    </script>
+  </body>
+</html>

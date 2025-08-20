@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste API</title>
+</head>
+<body>
+    <h1>Teste da API</h1>
+    <div id="result"></div>
+    
+    <script src="js/api.js"></script>
+    <script>
+        async function testAPI() {
+            const result = document.getElementById('result');
+            
+            try {
+                // Test health
+                result.innerHTML += '<p>Testando health...</p>';
+                const health = await api.request('/api/health');
+                result.innerHTML += '<p>✅ Health: ' + JSON.stringify(health) + '</p>';
+                
+                // Test register
+                result.innerHTML += '<p>Testando registro...</p>';
+                const email = 'test' + Date.now() + '@test.com';
+                const user = await api.register(email, '123456');
+                result.innerHTML += '<p>✅ Registro: ' + JSON.stringify(user) + '</p>';
+                
+                // Test get me
+                result.innerHTML += '<p>Testando getMe...</p>';
+                const me = await api.getMe();
+                result.innerHTML += '<p>✅ GetMe: ' + JSON.stringify(me) + '</p>';
+                
+                // Test update
+                result.innerHTML += '<p>Testando update...</p>';
+                const updated = await api.updateMe({ handle: '@testuser' });
+                result.innerHTML += '<p>✅ Update: ' + JSON.stringify(updated) + '</p>';
+                
+            } catch (error) {
+                result.innerHTML += '<p>❌ Erro: ' + error.message + '</p>';
+                console.error(error);
+            }
+        }
+        
+        testAPI();
+    </script>
+</body>
+</html>
