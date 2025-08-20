@@ -85,7 +85,7 @@ class DevLinksAPI {
 
   // Auth methods
   async register(email, password) {
-    const data = await this.request('/api/register', {
+    const data = await this.request('/register', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
@@ -95,7 +95,7 @@ class DevLinksAPI {
   }
 
   async login(email, password) {
-    const data = await this.request('/api/login', {
+    const data = await this.request('/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
@@ -110,7 +110,7 @@ class DevLinksAPI {
 
   // User methods
   async getMe() {
-    const data = await this.request('/api/me');
+    const data = await this.request('/me');
     return data.user;
   }
 
@@ -120,7 +120,7 @@ class DevLinksAPI {
   }
 
   async updateMe(updates) {
-    const data = await this.request('/api/me', {
+    const data = await this.request('/me', {
       method: 'PUT',
       body: JSON.stringify(updates),
     });
@@ -132,7 +132,7 @@ class DevLinksAPI {
     const formData = new FormData();
     formData.append('file', file);
     
-    const data = await this.request(`/api/upload/avatar?variant=${variant}`, {
+    const data = await this.request(`/upload/avatar?variant=${variant}`, {
       method: 'POST',
       body: formData,
     });
@@ -142,7 +142,7 @@ class DevLinksAPI {
 
   // Health check
   async healthCheck() {
-    return await this.request('/api/health');
+    return await this.request('/health');
   }
 }
 
